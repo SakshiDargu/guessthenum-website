@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Random Number Guessing Game</title>
+  <style>
+    /* Add your custom styling here */
+    body {
+      background-image: url("https://marketplace.canva.com/EAE-fwECN9E/1/0/1600w/canva-neon-purple-futuristic-colorful-game-time-desktop-wallpaper-kZN_z50jtn4.jpg");
+      background-size: cover;
+      text-align: center;
+      font-family: "Times New Roman", Times, serif;
+      line-height: 3.5;
+      background-color: #0d12058f;
+      color: #e0e3e8;
+    }
+    button {
+      font-family: 'helvetica neve', helvetica, sana-serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-align: centre;
+      border: 2px solid rgb(199, 100, 216);
+      background: rgb(199, 100, 216);
+      color: rgba(0, 0, 200, 0.6);
+      box-shadow: 1px 1px 2px rgba(0, 0, 200, 0.4);
+      border-radius: 10px;
+      padding: 3px 10px;
+      display: inline-block;
+      cursor: pointer;
+      color:rgb(250, 250, 250);
+      align: center;
+    }
+    
+  </style>
+</head>
+<body>
+  <h1 style="font-size: 50px;">Guess the Number!!!</h1>
+  <div id="game-container">
+    <button id="start-game-btn">Start Game</button>
+    <div id="game-content" style="display: none;">
+      <p style="color:oldlace">A Random Number is generated. Let's start the guessing!</p>
+      <input type="number" id="guess-input">
+      <button id="submit-btn">Submit</button>
+      <button id="end-game-btn">End Game</button>
+      <p id="result-message"></p>
+      <p id="guess-count"></p>
+    </div>
+  </div>
+
+  <script>
+    // JavaScript code goes here
+
+    // Get DOM elements
+    const startGameBtn = document.getElementById('start-game-btn');
+    const gameContent = document.getElementById('game-content');
+    const endGameBtn = document.getElementById('end-game-btn');
+    const guessInput = document.getElementById('guess-input');
+    const submitBtn = document.getElementById('submit-btn');
+    const resultMessage = document.getElementById('result-message');
+    const guessCount = document.getElementById('guess-count');
+
+    let randomNum;
+    let guesses = 0;
+
+    // Function to generate a random number
+    function generateRandomNumber() {
+      return Math.floor(Math.random() * 100) + 1; // Generates a random number between 1 and 100
+    }
+
+    // Function to start the game
+    function startGame() {
+      randomNum = generateRandomNumber();
+      console.log('Random Number:', randomNum); // For testing purposes
+      startGameBtn.style.display = 'none';
+      gameContent.style.display = 'block';
+    }
+
+    // Function to end the game and reset
+    function endGame() {
+      randomNum = undefined;
+      guesses = 0;
+      guessCount.innerHTML = '';
+      resultMessage.innerHTML = '';
+      gameContent.style.display = 'none';
+      startGameBtn.style.display = 'block';
+    }
+
+    // Function to handle the user's guess
+    function handleGuess() {
+      const guess = parseInt(guessInput.value);
+      guessInput.value = '';
+
+      if (guess === randomNum) {
+        resultMessage.innerHTML = 'Correct guess!';
+        guessCount.innerHTML = `Total guesses: ${guesses}`;
+      } else if (guess < randomNum) {
+        resultMessage.innerHTML = 'Higher!';
+        guesses++;
+      } else {
+        resultMessage.innerHTML = 'Lower!';
+        guesses++;
+      }
+    }
+
+    // Event listeners
+    startGameBtn.addEventListener('click', startGame);
+    endGameBtn.addEventListener('click', endGame);
+    submitBtn.addEventListener('click', handleGuess);
+  </script>
+</body>
+</html>
